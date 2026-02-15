@@ -20,7 +20,7 @@ I2S_OUT_DOUT     7<br/>
 3.喇叭<br/>
 连接到MAX98357A<br/>
 淘宝上用 "小智AI语音对话机器人 MINI ESP32-S3-N16R8开发板" 可查到. <br/>
-<img src= 'https://raw.githubusercontent.com/lixy123/xiaozhi_mcp_clock_remark_memo/refs/heads/main/pic/2.jpg' /> <br/>
+<img src= 'https://github.com/lixy123/xiaozhi_mcp_play_music/blob/main/pic/hard.jpg?raw=true' /> <br/>
 
 用ESP32， ESP32C3板也可运行。<br/>
 小智AI所用硬件也是ESP32S3,ESP32C3等芯片。本程序是烧录在另一个ESP32S3芯片上运行的，不是烧录在小智所用硬件上的，不要弄混淆了。
@@ -31,6 +31,7 @@ I2S_OUT_DOUT     7<br/>
 
   <b>2. 库版本：</b><br/>
   WebSocketMCP 1.0.0 https://github.com/toddpan/xiaozhi-esp32-mcp 注：不要用0.0.10版本，无法用<br/>
+            如果下载不到最新的，用这个地址的库：https://github.com/lixy123/xiaozhi_mcp_play_music/blob/main/lib/xiaozhi-mcp.rar<br/>
   ESPAsyncWebServer 3.10.0 https://github.com/ESP32Async/ESPAsyncWebServer<br/>
   AsyncTCP  3.4.10 https://github.com/dvarrel/AsyncTCP    注：被ESPAsyncWebServer调用，版本不能过低<br/>
   ArduinoJson 7.4.2 https://github.com/bblanchon/ArduinoJson.git<br/>
@@ -62,7 +63,7 @@ C. target.bin烧录到地址 0x0<br>
 https://my.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS<br>
 
 编译好的固件烧录界面:<br/>
-<img src= 'https://raw.githubusercontent.com/lixy123/xiaozhi_mcp_clock_remark_memo/refs/heads/main/pic/1.jpg' /> <br/>
+<img src= 'https://github.com/lixy123/xiaozhi_mcp_play_music/blob/main/pic/shaolv.jpg?raw=true' /> <br/>
 
 <b> 三. 配置 </b> <br/>
 上电后有两种需要配置相关参数：<br/>
@@ -85,6 +86,8 @@ https://my.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS<br>
 2.用手机或电脑连接此AP<br/>
 3.浏览器输入网址 http://192.168.4.1<br/>
 4.填入配置参数<br/>
+<img src= 'https://github.com/lixy123/xiaozhi_mcp_play_music/blob/main/pic/set.jpg?raw=true' /> <br/>
+
 参数说明：<br/>
 WIFI_SSID 所连接的路由器 AP账号<br/>
 WIFI_PASS 所连接的路由器 AP密码<br/>
