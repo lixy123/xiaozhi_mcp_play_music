@@ -11,7 +11,7 @@
    
 1.ESP32S3<br/>
   Flash大小>=4MB , 必须带PSRAM <br/>
-  因为播放mp3用的ESP32-audioI2S库必须用到PSRAM <br/>
+  播放mp3用的ESP32-audioI2S库必须用到PSRAM，ESP32S3带PSRAM,在播放网络音乐可用到缓存，减少声音卡顿机率。 <br/>
 2.MAX98357A<br/> 
 MAX98357A   ==>ESP32S3引脚<br/>
 I2S_OUT_BCLK     15<br/>
@@ -19,11 +19,11 @@ I2S_OUT_LRC      16<br/>
 I2S_OUT_DOUT     7<br/>
 3.喇叭<br/>
 连接到MAX98357A<br/>
-淘宝上用 "小智AI语音对话机器人 MINI ESP32-S3-N16R8开发板" 可查到. <br/>
+我用的是淘宝上给小智设计的开发板，用 "小智AI语音对话机器人 MINI ESP32-S3-N16R8开发板" 可查到. <br/>
+该板有几个功能按钮，还带MAX98357A，省去了单独外接。<br/>
 <img src= 'https://github.com/lixy123/xiaozhi_mcp_play_music/blob/main/pic/hard.jpg?raw=true' /> <br/>
 
-用ESP32， ESP32C3板也可运行。<br/>
-小智AI所用硬件也是ESP32S3,ESP32C3等芯片。本程序是烧录在另一个ESP32S3芯片上运行的，不是烧录在小智所用硬件上的，不要弄混淆了。
+小智AI所用硬件一般是ESP32S3,ESP32C3等芯片。本程序是烧录在另一个ESP32S3芯片上运行的，不是烧录在小智所用硬件上的，不要弄混淆了。
 
 <b>二.软件：</b><br/>
  <b>1. IDE：</b><br/>
