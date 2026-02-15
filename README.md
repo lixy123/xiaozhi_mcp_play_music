@@ -1,17 +1,19 @@
 
- <b>    ESP32S3运行MCP, 小智AI用语音让其播放音乐。</b>
-   
+ <b>ESP32S3运行MCP, 小智AI用语音让其播放音乐。</b>   
  <b>  必备条件</b><br>
    1.有一台小智AI硬件，安装有小智固件并能进行语音对话。<br>
    2.有一台搭建了 https://github.com/OmniX-Space/MeowMusicServer 的音乐服务器URL地址，供该硬件使用，运行在公网或内网均可。<br>
      如果没有该地址，就没必要继续看本项目了，这是本项目的运行基础.<br>
    3.满足本项目的ESP32S3硬件，见下文。<br>
 <br>
+   开发MeowMusicServer项目的这个团队似乎不太会在小智共享的代码基础上编写播放在线音乐代码，提供的小智固件源码播放音乐差劲
+
 <b>一.硬件：</b>    <br>
    
 1.ESP32S3<br/>
   Flash大小>=4MB , 必须带PSRAM <br/>
-  播放mp3用的ESP32-audioI2S库必须用到PSRAM，ESP32S3带PSRAM,在播放网络音乐可用到缓存，减少声音卡顿机率。 <br/>
+  播放mp3用的ESP32-audioI2S库必须用到PSRAM， <br/>
+  如果想在不带PSRAM的更多ESP32系列芯片上运行，可以把ESP32-audioI2S这个音乐播放库换成这个库: https://github.com/earlephilhower/ESP8266Audio，该库不要求使用PSRAM, 源码进行少量调整即可。我项目中没用这个库的原因是因为想用PSRAM, 在播放网络音乐能对音乐数据进行缓存，减少声音卡顿机率。<br/>
 2.MAX98357A<br/> 
 MAX98357A   ==>ESP32S3引脚<br/>
 I2S_OUT_BCLK     15<br/>
