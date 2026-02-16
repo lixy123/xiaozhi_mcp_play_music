@@ -14,8 +14,8 @@
    yuafengfreeapi.go 修改了 tryFetchFromAPI函数 增加如果有本音乐缓存目录，不再重新缓存音乐<br>
    helper.go 修改了 compressAndSegmentAudio函数 增加当缓存文件处理完后写个标志文件<br>
    
- MeowMusicServer底层用的是 api-v2.yuafeng.cn查歌，稍微多查询出了几首歌，服务器IP就被封了。免费的东西真没法弄。 <br> 
- 此项目准备放弃，不想继续了！  <br> 
+提醒： MeowMusicServer底层用的是 api-v2.yuafeng.cn，api.yaohud.cn网站查歌，用的是免费接口，很容易后期变更协议，如果查不出歌，查看音乐服务器的日志中yuafengfreeapi.go源码关于 YuafengAPIResponseHandler 函数日志。必要时调试修改下查询音乐接口，一般就能解决！<br> 
+
    
 <b>一.硬件：</b><br/>
 1.ESP32S3<br/>
