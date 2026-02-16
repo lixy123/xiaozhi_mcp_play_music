@@ -1,5 +1,7 @@
 
  <b>ESP32S3运行MCP, 小智AI用语音让其播放音乐。</b>   
+
+ 
  
  <b>  必备条件</b><br>
    1.有一台小智AI硬件，安装有小智固件并能进行语音对话。<br>
@@ -12,7 +14,8 @@
    yuafengfreeapi.go 修改了 tryFetchFromAPI函数 增加如果有本音乐缓存目录，不再重新缓存音乐<br>
    helper.go 修改了 compressAndSegmentAudio函数 增加当缓存文件处理完后写个标志文件<br>
    
-   
+ MeowMusicServer底层用的是 api-v2.yuafeng.cn查歌，稍微多查询出了几首歌，服务器IP就被封了。免费的东西真没法弄。 <br> 
+ 此项目准备放弃，不想继续了！  <br> 
    
 <b>一.硬件：</b><br/>
 1.ESP32S3<br/>
