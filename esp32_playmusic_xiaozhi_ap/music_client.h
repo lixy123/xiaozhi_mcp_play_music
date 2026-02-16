@@ -42,38 +42,38 @@ public:
 
     if (httpCode == HTTP_CODE_OK) {
       String payload = http.getString();
+      Serial.printf("payload:%s\n", payload.c_str());
 
       ///api/search 需要去头，去尾 '[',  ']'
       //stream_pcm?song 不用
       payload = payload.substring(1, payload.length() - 2);  // 截取子字符串
 
+      if (payload.length() > 0) {
 
-      Serial.printf("payload:%s\n", payload.c_str());
+        DynamicJsonDocument doc(1024);
+        DeserializationError error = deserializeJson(doc, payload);
 
+        if (!error) {
 
+          if (songName) {
+            if (doc.containsKey("artist") && doc.containsKey("title"))
+              *songName = doc["artist"].as<String>() + "-" + doc["title"].as<String>();
+          }
 
-      DynamicJsonDocument doc(1024);
-      DeserializationError error = deserializeJson(doc, payload);
+          if (filePath) {
+            if (doc.containsKey("url"))
+              *filePath = doc["url"].as<String>();
+          }
 
-      if (!error) {
-
-        if (songName) {
-          if (doc.containsKey("artist") && doc.containsKey("title"))
-            *songName = doc["artist"].as<String>() + "-" + doc["title"].as<String>();
+          success = true;
+          Serial.printf("[Music] Downloaded:\nsongName: %s\nurl: %s\n",
+                        songName->c_str(),
+                        filePath->c_str());
+        } else {
+          Serial.printf("[Music] Error: \n");
         }
-
-        if (filePath) {
-          if (doc.containsKey("url"))
-            *filePath = doc["url"].as<String>();
-        }
-
-        success = true;
-        Serial.printf("[Music] Downloaded:\nsongName: %s\nurl: %s\n",
-                      songName->c_str(),
-                      filePath->c_str());
-      } else {
-        Serial.printf("[Music] Error: \n");
-      }
+      } else
+        Serial.println("json is null");
     } else {
       Serial.printf("[Music] HTTP Error: %d\n", httpCode);
     }

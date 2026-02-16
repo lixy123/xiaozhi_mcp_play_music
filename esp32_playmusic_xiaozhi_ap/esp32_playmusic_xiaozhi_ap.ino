@@ -225,35 +225,43 @@ void processSerialCommands() {
             /*
             不稳定，一旦一首歌可不了，所有歌都听不了，并会复位！
             String fn = Search_Music_stream_pcm(command);
+            if (fn.length()>0)
+            {
             fn.replace(musicServerUrl, "");
             //查询歌曲时，后台数据会开始缓存，需要延时一点时间
             delay(8000);
             playMusicClient.play_url(fn.c_str());
-
+             }
+             else
+               Serial.println("查询不到歌曲");
             */
 
 
             String fn = Search_Music(command);
 
-            //检查文件是否转换完成，完成后进行播放！
-            //实测，5-50秒左右均有！
-            Serial.println("############");
-            String fn_txt = fn + ".txt";
-            bool ret_check = false;
-            //120秒尝试...
-            for (int loop1 = 0; loop1 < 24; loop1++) {
-              delay(5000);
-              Serial.printf("loop=%d", loop1);
-              ret_check = musicClient.Check_Music(fn_txt);
-              if (ret_check) break;
-            }
-            Serial.println("############");
 
-            if (ret_check) {
-              //delay(2000);
-              playMusicClient.play_url(fn.c_str());
+            if (fn.length() > 0) {
+              //检查文件是否转换完成，完成后进行播放！
+              //实测，5-50秒左右均有！
+              Serial.println("############");
+              String fn_txt = fn + ".txt";
+              bool ret_check = false;
+              //120秒尝试...
+              for (int loop1 = 0; loop1 < 24; loop1++) {
+                delay(5000);
+                Serial.printf("loop=%d", loop1);
+                ret_check = musicClient.Check_Music(fn_txt);
+                if (ret_check) break;
+              }
+              Serial.println("############");
+
+              if (ret_check) {
+                //delay(2000);
+                playMusicClient.play_url(fn.c_str());
+              } else
+                Serial.println("下载歌曲失败");
             } else
-              Serial.println("skip play");
+              Serial.println("查询不到歌曲");
           }
         }
 
@@ -299,6 +307,7 @@ String Search_Music(const String& keyword) {
   if (success) {
     Serial.println("Download Complete!");
   } else {
+    filePath = "";
     Serial.println("Download failed!");
   }
   return filePath;
@@ -342,32 +351,41 @@ void loop() {
     /*
     String fn = Search_Music_stream_pcm(g_play_song);
     g_play_song = "";  //清空信息
+    if (fn.length()>0)
+    {
     fn.replace(musicServerUrl, "");
     delay(5000);
     playMusicClient.play_url(fn.c_str());
+    }
+    else
+      Serial.println("查询不到歌曲");
     */
 
     String fn = Search_Music(g_play_song);
     g_play_song = "";  //清空信息
-    //检查文件是否转换完成，完成后进行播放！
-    //实测，5-50秒左右均有！
-    Serial.println("############");
-    String fn_txt = fn + ".txt";
-    bool ret_check = false;
-    //120秒尝试...
-    for (int loop1 = 0; loop1 < 24; loop1++) {
-      delay(5000);
-      Serial.printf("loop=%d", loop1);
-      ret_check = musicClient.Check_Music(fn_txt);
-      if (ret_check) break;
-    }
-    Serial.println("############");
 
-    if (ret_check) {
-      delay(2000);
-      playMusicClient.play_url(fn.c_str());
+    if (fn.length() > 0) {
+      //检查文件是否转换完成，完成后进行播放！
+      //实测，5-50秒左右均有！
+      Serial.println("############");
+      String fn_txt = fn + ".txt";
+      bool ret_check = false;
+      //120秒尝试...
+      for (int loop1 = 0; loop1 < 24; loop1++) {
+        delay(5000);
+        Serial.printf("loop=%d", loop1);
+        ret_check = musicClient.Check_Music(fn_txt);
+        if (ret_check) break;
+      }
+      Serial.println("############");
+
+      if (ret_check) {
+        delay(2000);
+        playMusicClient.play_url(fn.c_str());
+      } else
+        Serial.println("下载歌曲失败");
     } else
-      Serial.println("skip play");
+      Serial.println("查询不到歌曲");
   }
 
   // 处理MCP客户端事件
