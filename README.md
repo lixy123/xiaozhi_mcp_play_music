@@ -7,6 +7,12 @@
      如果没有该地址，就没必要继续看本项目了，这是本项目的运行基础.<br>
    3.满足本项目的ESP32S3硬件，见下文。<br>
    开发MeowMusicServer项目的团队同时提供了小智源码调用其音乐服务器播放音乐的源码项目。但似乎不太会修改小智共享项目，不会优化ESP32S3的IDF代码环境播放在线音乐算法，编译出来的小智固件解析播放在线音乐效果很差劲。要么播不到半分钟停工，声音卡顿，播放中复位重启，几乎播放每首歌都如此。<br>
+   同时，对MeowMusicServer 项目的源文件要修改下：<br>
+   把本项目中 \lib 目录下的两个 go文件替换掉MeowMusicServer 项目的对应文件。<br>
+   yuafengfreeapi.go 修改了 tryFetchFromAPI函数 增加如果有本音乐缓存目录，不再重新缓存音乐<br>
+   helper.go 修改了 compressAndSegmentAudio函数 增加当缓存文件处理完后写个标志文件<br>
+   
+   
    
 <b>一.硬件：</b><br/>
 1.ESP32S3<br/>
