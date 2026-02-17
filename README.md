@@ -7,7 +7,7 @@
      如果没有该地址，就没必要继续看本项目了，这是本项目的运行基础.<br>
    3.满足本项目的ESP32S3硬件，见下文。<br>   
    
-   注：MeowMusicServer 项目代码有bug, 搭建完MeowMusicServer后，把本项目的 \lib\MeowMusicServer.rar解压替换下原始文件才可运行本项目<br/>   
+   注：MeowMusicServer 项目代码有bug, 搭建完MeowMusicServer后，必须把本项目的 \lib\MeowMusicServer.rar解压替换掉MeowMusicServer文件才可运行本项目<br/>   
    
 提醒： MeowMusicServer底层用的是 api-v2.yuafeng.cn，api.yaohud.cn网站查歌，用的是免费接口，很容易后期变更协议，如果查不出歌，查看音乐服务器的日志中yuafengfreeapi.go源码关于 YuafengAPIResponseHandler 函数日志。必要时调试修改下查询音乐接口，一般就能解决！<br> 
 
