@@ -19,6 +19,8 @@ extern String led_pin;    //AP模式下LED亮灯状态， -1 表示不用
 extern String vol_up_pin; 
 extern String vol_down_pin; 
 
+extern String volume;   //开机默认机量 0-20
+
 extern String i2s_out_bclk;
 extern String i2s_out_lrc;
 extern String i2s_out_dout; 

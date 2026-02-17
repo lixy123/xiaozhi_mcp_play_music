@@ -29,6 +29,7 @@ public:
 
 
   //整体播放有时需要等待30多秒，反应慢！
+  /*
   bool Search_Music(const String& keyword, String* songName = nullptr, String* filePath = nullptr) {
     HTTPClient http;
     String url = _serverUrl + "/api/search?query=" + urlEncode(keyword);
@@ -81,9 +82,9 @@ public:
     http.end();
     return success;
   }
+*/
 
-  /*
-播放音乐不稳定，播放不出音乐机率大，重启机会大
+//播放音乐不稳定，播放不出音乐机率大，重启机会大
 bool Search_Music_stream_pcm(const String& keyword, String* songName = nullptr, String* filePath = nullptr) {
     HTTPClient http;
     String url = _serverUrl + "/stream_pcm?song=" + urlEncode(keyword);
@@ -130,9 +131,9 @@ bool Search_Music_stream_pcm(const String& keyword, String* songName = nullptr, 
     http.end();
     return success;
   }
-*/
 
 
+/*
   bool Check_Music(const String& url) {
     HTTPClient http;
     String url_check = _serverUrl + url;
@@ -155,6 +156,7 @@ bool Search_Music_stream_pcm(const String& keyword, String* songName = nullptr, 
     http.end();
     return success;
   }
+*/
 
 private:
   String _serverUrl;

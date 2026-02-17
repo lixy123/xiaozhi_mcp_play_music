@@ -17,12 +17,13 @@ String mcpEndpoint = "";     //小智mcp
 String reset_pin = "";       //重置参数引脚，必须有
 String led_pin = "";         //led引脚 AP模式下LED亮灯状态， -1 表示不用
 
-String vol_up_pin = "";       //音量增加引脚
-String vol_down_pin = "";         //音量减少引脚
+String vol_up_pin = "";    //音量增加引脚
+String vol_down_pin = "";  //音量减少引脚
 
 String i2s_out_bclk;
 String i2s_out_lrc;
 String i2s_out_dout;
+String volume;  //初始化音量
 
 String param_flag = "";  //是否配置过参数
 
@@ -94,6 +95,7 @@ String param_to_html(String html, String info_str) {
   html.replace("<<i2s_out_bclk>>", i2s_out_bclk);
   html.replace("<<i2s_out_lrc>>", i2s_out_lrc);
   html.replace("<<i2s_out_dout>>", i2s_out_dout);
+  html.replace("<<volume>>", volume);
   return html;
 }
 
@@ -164,7 +166,7 @@ void www_save(AsyncWebServerRequest* request) {
     led_pin = request->getParam("led_pin", true)->value();
   }
 
-   if (request->hasParam("vol_up_pin", true)) {
+  if (request->hasParam("vol_up_pin", true)) {
     vol_up_pin = request->getParam("vol_up_pin", true)->value();
   }
 
@@ -185,6 +187,10 @@ void www_save(AsyncWebServerRequest* request) {
     i2s_out_dout = request->getParam("i2s_out_dout", true)->value();
   }
 
+  if (request->hasParam("volume", true)) {
+    volume = request->getParam("volume", true)->value();
+  }
+
   Serial.println("传入参数:");
   Serial.println("ssid=<" + ssid + ">");
   Serial.println("pwd=<" + pwd + ">");
@@ -193,12 +199,13 @@ void www_save(AsyncWebServerRequest* request) {
 
   Serial.println("reset_pin=<" + reset_pin + ">");
   Serial.println("led_pin=<" + led_pin + ">");
- Serial.println("vol_up_pin=<" + vol_up_pin + ">");
+  Serial.println("vol_up_pin=<" + vol_up_pin + ">");
   Serial.println("vol_down_pin=<" + vol_down_pin + ">");
 
   Serial.println("i2s_out_bclk=<" + i2s_out_bclk + ">");
   Serial.println("i2s_out_lrc=<" + i2s_out_lrc + ">");
   Serial.println("i2s_out_dout=<" + i2s_out_dout + ">");
+  Serial.println("volume=<" + volume + ">");
 
   // 保存WiFi信息
   preferences.begin("wen", false);  // 读写模式
@@ -209,12 +216,13 @@ void www_save(AsyncWebServerRequest* request) {
   preferences.putString("reset_pin", reset_pin);
   preferences.putString("led_pin", led_pin);
 
- preferences.putString("vol_up_pin", vol_up_pin);
+  preferences.putString("vol_up_pin", vol_up_pin);
   preferences.putString("vol_down_pin", vol_down_pin);
 
   preferences.putString("i2s_out_bclk", i2s_out_bclk);
   preferences.putString("i2s_out_lrc", i2s_out_lrc);
   preferences.putString("i2s_out_dout", i2s_out_dout);
+  preferences.putString("volume", volume);
 
   preferences.putString("param_flag", "1");
   preferences.end();
@@ -316,6 +324,8 @@ void ap_init() {
   i2s_out_lrc = preferences.getString("i2s_out_lrc", "16");
   i2s_out_dout = preferences.getString("i2s_out_dout", "7");
 
+  volume = preferences.getString("volume", "8");
+
   param_flag = preferences.getString("param_flag");
 
   //reset_pin=40;
@@ -325,7 +335,7 @@ void ap_init() {
 
   Serial.println("mcpEndpoint: " + mcpEndpoint);
   Serial.println("musicServerUrl: " + musicServerUrl);
-  
+
   Serial.println("reset_pin: " + reset_pin);
   Serial.println("led_pin: " + led_pin);
   Serial.println("vol_up_pin: " + vol_up_pin);
@@ -334,6 +344,7 @@ void ap_init() {
   Serial.println("i2s_out_bclk: " + i2s_out_bclk);
   Serial.println("i2s_out_lrc: " + i2s_out_lrc);
   Serial.println("i2s_out_dout: " + i2s_out_dout);
+  Serial.println("volume: " + volume);
 
   preferences.end();
 

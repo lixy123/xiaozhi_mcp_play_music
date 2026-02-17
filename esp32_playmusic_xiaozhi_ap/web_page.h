@@ -26,6 +26,8 @@ const char configPage[] PROGMEM = R"=====(
             i2s_out_lrc:<input type="text" name="i2s_out_lrc"  style="width:50px"  value="<<i2s_out_lrc>>">                   
             i2s_out_dout:<input type="text" name="i2s_out_dout"   style="width:50px"   value="<<i2s_out_dout>>">           
             <br>
+            volume(0-20):<input type="text" name="volume"   style="width:50px"   value="<<volume>>">   
+            
             <input type="submit" value="保存">
             <br>
             <<span>>
@@ -60,6 +62,8 @@ function validateRequired() {
     var i2s_out_bclk = document.getElementsByName('i2s_out_bclk')[0]
     var i2s_out_lrc = document.getElementsByName('i2s_out_lrc')[0]
     var i2s_out_dout = document.getElementsByName('i2s_out_dout')[0]
+    var volume = document.getElementsByName('volume')[0]
+
 
     if (ssid.value.trim() === "") {
         alert("ssid不能为空！")
@@ -126,6 +130,11 @@ function validateRequired() {
         alert("i2s_out_dout不能为空！")
         return false
     }
+
+    if (volume.value.trim() === "") {
+        alert("volume不能为空！")
+        return false
+    }
   
   if (isNaN(i2s_out_bclk.value.trim())) {
         alert("i2s_out_bclk不是数值！")
@@ -139,7 +148,18 @@ function validateRequired() {
         alert("i2s_out_dout不是数值！")
         return false
     }
-  
+
+     if (isNaN(volume.value.trim())) {
+        alert("volume不是数值！")
+        return false
+    }
+
+    var num = parseInt(volume.value);
+    if(num <0 || num>20){
+        alert("volume not in 0-20!")
+        return false;
+    }
+
     return true
     console.log("验证通过！")
 }

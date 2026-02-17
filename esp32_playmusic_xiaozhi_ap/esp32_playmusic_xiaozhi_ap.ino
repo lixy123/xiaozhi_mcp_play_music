@@ -22,6 +22,7 @@ MusicClient musicClient;
 //PlayMusicClient * playMusicClient;
 PlayMusicClient playMusicClient;
 
+//库中可用：0-21 (为了小智中换算成百分比好算，程序中限定0-20)
 int g_volume = 5;
 String g_play_song = "";
 
@@ -222,27 +223,25 @@ void processSerialCommands() {
           //音乐名称搜音乐，并进行播放
           else {
 
-            /*
-            不稳定，一旦一首歌可不了，所有歌都听不了，并会复位！
+
+            //不稳定，一旦一首歌可不了，所有歌都听不了，并会复位！
             String fn = Search_Music_stream_pcm(command);
-            if (fn.length()>0)
-            {
-            fn.replace(musicServerUrl, "");
-            //查询歌曲时，后台数据会开始缓存，需要延时一点时间
-            delay(8000);
-            playMusicClient.play_url(fn.c_str());
-             }
-             else
-               Serial.println("查询不到歌曲");
-            */
+            if (fn.length() > 0) {
+              fn.replace(musicServerUrl, "");
+              //查询歌曲时，后台数据会开始缓存，增加点延时
+              delay(5000);
+              playMusicClient.play_url(fn.c_str());
+            } else
+              Serial.println("查询不到歌曲");
 
 
+            /*
             String fn = Search_Music(command);
 
 
             if (fn.length() > 0) {
               //检查文件是否转换完成，完成后进行播放！
-              //实测，5-50秒左右均有！
+              //实测，10-50秒左右均有！  20秒居多
               Serial.println("############");
               String fn_txt = fn + ".txt";
               bool ret_check = false;
@@ -262,6 +261,7 @@ void processSerialCommands() {
                 Serial.println("下载歌曲失败");
             } else
               Serial.println("查询不到歌曲");
+            */
           }
         }
 
@@ -291,6 +291,7 @@ void processSerialCommands() {
 
    同一首歌，第一次播放可能慢。如果重复播放，则会从缓存读，速度快
  */
+/*
 String Search_Music(const String& keyword) {
   Serial.println("\n========================================");
   Serial.println("Search_Music: " + keyword);
@@ -312,9 +313,11 @@ String Search_Music(const String& keyword) {
   }
   return filePath;
 }
+*/
 
-/*
-该接口播放音乐不稳定，经常不播放，重启！
+
+//该接口播放音乐不稳定，经常不播放，重启！
+
 String Search_Music_stream_pcm(const String& keyword) {
   Serial.println("\n========================================");
   Serial.println("Search_Music: " + keyword);
@@ -328,14 +331,14 @@ String Search_Music_stream_pcm(const String& keyword) {
     &songName,
     &filePath);
 
-  if (success) { 
+  if (success) {
     Serial.println("Download Complete!");
   } else {
     Serial.println("Download failed!");
   }
   return filePath;
 }
-*/
+
 
 void loop() {
 
@@ -348,19 +351,18 @@ void loop() {
   //处理mcp的音乐播放信号
   if (g_play_song.length() > 0) {
 
-    /*
+
     String fn = Search_Music_stream_pcm(g_play_song);
     g_play_song = "";  //清空信息
-    if (fn.length()>0)
-    {
-    fn.replace(musicServerUrl, "");
-    delay(5000);
-    playMusicClient.play_url(fn.c_str());
-    }
-    else
+    if (fn.length() > 0) {
+      fn.replace(musicServerUrl, "");
+      delay(5000);
+      playMusicClient.play_url(fn.c_str());
+    } else
       Serial.println("查询不到歌曲");
-    */
 
+
+    /*
     String fn = Search_Music(g_play_song);
     g_play_song = "";  //清空信息
 
@@ -386,6 +388,7 @@ void loop() {
         Serial.println("下载歌曲失败");
     } else
       Serial.println("查询不到歌曲");
+    */
   }
 
   // 处理MCP客户端事件
@@ -461,6 +464,7 @@ void setup() {
 
   playMusicClient.set_ServerUrl(musicServerUrl);
   playMusicClient.setPinout(i2s_out_bclk.toInt(), i2s_out_lrc.toInt(), i2s_out_dout.toInt());
+  g_volume= volume.toInt();
   playMusicClient.setVolume(g_volume);
 
 
