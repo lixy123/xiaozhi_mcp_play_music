@@ -1,18 +1,13 @@
 
  <b>ESP32S3运行MCP, 小智AI用语音让其播放音乐。</b>   
-
- 
  
  <b>  必备条件</b><br>
    1.有一台小智AI硬件，安装有小智固件并能进行语音对话。<br>
    2.有一台搭建了 https://github.com/OmniX-Space/MeowMusicServer 的音乐服务器URL地址，供该硬件使用，运行在公网或内网均可。<br>
      如果没有该地址，就没必要继续看本项目了，这是本项目的运行基础.<br>
-   3.满足本项目的ESP32S3硬件，见下文。<br>
-   开发MeowMusicServer项目的团队同时提供了小智源码调用其音乐服务器播放音乐的源码项目。但似乎不太会修改小智共享项目，不会优化ESP32S3的IDF代码环境播放在线音乐算法，编译出来的小智固件解析播放在线音乐效果很差劲。要么播不到半分钟停工，声音卡顿，播放中复位重启，几乎播放每首歌都如此。<br>
-   同时，对MeowMusicServer 项目的源文件要修改下：<br>
-   把本项目中 \lib 目录下的两个 go文件替换掉MeowMusicServer 项目的对应文件。<br>
-   yuafengfreeapi.go 修改了 tryFetchFromAPI函数 增加如果有本音乐缓存目录，不再重新缓存音乐<br>
-   helper.go 修改了 compressAndSegmentAudio函数 增加当缓存文件处理完后写个标志文件<br>
+   3.满足本项目的ESP32S3硬件，见下文。<br>   
+   
+   注：MeowMusicServer 项目代码有bug, 搭建完MeowMusicServer后，把本项目的 \lib\MeowMusicServer.rar解压替换下原始文件才可运行本项目<br/>   
    
 提醒： MeowMusicServer底层用的是 api-v2.yuafeng.cn，api.yaohud.cn网站查歌，用的是免费接口，很容易后期变更协议，如果查不出歌，查看音乐服务器的日志中yuafengfreeapi.go源码关于 YuafengAPIResponseHandler 函数日志。必要时调试修改下查询音乐接口，一般就能解决！<br> 
 
